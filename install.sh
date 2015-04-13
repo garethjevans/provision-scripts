@@ -35,7 +35,7 @@ host_name=$(grep `hostname` /etc/hosts | awk '{print $3}')
 wget ${agent_download_path} -O /tmp/${agent_download_name} >> $LOG
 cd /tmp
 unzip /tmp/${agent_download_name}
-cd /tmp/${agent_download_name}-install
+cd /tmp/${agent_download_name%%.*}-install
 
 ./install-agent.sh << EOF
 ${installation_dir}
@@ -48,7 +48,7 @@ N
 N
 ${host_name}
 None
-EOF >> $LOG
+EOF
 
 cd ${installation_dir}/bin
 ./agent start >> $LOG
