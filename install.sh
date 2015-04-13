@@ -16,10 +16,6 @@ alternatives --set javac /opt/java8/bin/javac
 
 java -version >> $LOG
 
-echo "Host Entries..." >> $LOG
-echo "159.8.157.88 mcp-poc-uc.softlayer.com mcp-poc-uc" >> /etc/hosts
-echo "Done" >> $LOG
-
 ############################################################################
 ## Install UrbanCode agent                                                ##
 ############################################################################
@@ -29,10 +25,13 @@ agent_download_name=`basename ${agent_download_path} | sed 's/\(^[a-z\]*-[a-z]*-
 
 installation_dir=/opt/ibm-ucd/agent
 
+echo "Host Entries..." >> $LOG
 partial_ip=$(ifconfig | tail -n +`ifconfig | grep -n eth1| awk -F':' '{print $1+1}'` | head -1 | awk '{print substr($2,6,10)}')
 echo "${partial_ip}88 mcp-poc-uc.softlayer.com mcp-poc-uc" >> /etc/hosts
+echo "Done" >> $LOG
 
 wget ${agent_download_path} -O /tmp/${agent_download_name} >> $LOG
+cd /tmp
 unzip /tmp/${agent_download_name}
 cd /tmp/${agent_download_name}-install
 
