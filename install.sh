@@ -30,12 +30,14 @@ partial_ip=$(ifconfig | tail -n +`ifconfig | grep -n eth1| awk -F':' '{print $1+
 echo "${partial_ip}88 mcp-poc-uc.softlayer.com mcp-poc-uc" >> /etc/hosts
 echo "Done" >> $LOG
 
+host_name=$(grep `hostname` /etc/hosts | awk '{print $3}')
+
 wget ${agent_download_path} -O /tmp/${agent_download_name} >> $LOG
 cd /tmp
 unzip /tmp/${agent_download_name}
 cd /tmp/${agent_download_name}-install
 
-./install_agent.sh << EOF
+./install-agent.sh << EOF
 ${installation_dir}
 Y
 /opt/java8
@@ -44,7 +46,7 @@ mcp-poc-uc
 7918
 N
 N
-mcp-poc-autoprovision
+${host_name}
 None
 EOF >> $LOG
 
