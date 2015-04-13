@@ -30,6 +30,7 @@ agent_download_name=`basename ${agent_download_path} | sed 's/\(^[a-z\]*-[a-z]*-
 installation_dir=/opt/ibm-ucd/agent
 
 partial_ip=`ifconfig | tail -n +`ifconfig | grep -n eth1| awk -F':' '{print $1+1}'` | head -1 | awk '{print substr($2,6,10)}'`
+echo "${partial_ip}88 mcp-poc-uc.softlayer.com mcp-poc-uc" >> /etc/hosts
 
 wget ${agent_download_path} -O /tmp/${agent_download_name} >> $LOG
 unzip /tmp/${agent_download_name}
@@ -40,7 +41,7 @@ ${installation_dir}
 Y
 /opt/java8
 N
-${partial_ip}88
+mcp-poc-uc
 7918
 N
 N
