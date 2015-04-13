@@ -20,4 +20,34 @@ echo "Host Entries..." >> $LOG
 echo "159.8.157.88 mcp-poc-uc.softlayer.com mcp-poc-uc" >> /etc/hosts
 echo "Done" >> $LOG
 
-. install_urbancode_agent.sh
+############################################################################
+## Install UrbanCode agent                                                ##
+############################################################################
+
+agent_download_path="https://github.com/garethjevans/provision-scripts/blob/master/ibm-ucd-agent.zip?raw=true"
+agent_download_name=`basename ${agent_download_path} | sed 's/\(^[a-z\]*-[a-z]*-[a-z]*.zip\).*$/\1/'`
+
+installation_dir=/opt/ibm-ucd/agent
+
+partial_ip=`ifconfig | tail -n +`ifconfig | grep -n eth1| awk -F':' '{print $1+1}'` | head -1 | awk '{print substr($2,6,10)}'`
+echo "${partial_ip}88 mcp-poc-uc.softlayer.com mcp-poc-uc" >> /etc/hosts
+
+wget ${agent_download_path} -O /tmp/${agent_download_name} >> $LOG
+unzip /tmp/${agent_download_name}
+cd /tmp/${agent_download_name}-install
+
+./install_agent.sh << EOF
+${installation_dir}
+Y
+/opt/java8
+N
+mcp-poc-uc
+7918
+N
+N
+mcp-poc-autoprovision
+None
+EOF >> $LOG
+
+cd ${installation_dir}/bin
+./agent start >> $LOG
