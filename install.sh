@@ -70,7 +70,7 @@ EOF
 
 # configure access to ucd-agent installation
 echo "Changing owner of ${installation_dir} to ${user}" >> $LOG
-chown -R ${user} ${installation_dir}/..
-chown -R :${user} ${installation_dir}/..
+chown -R ${user} ${installation_dir}/../..
+chown -R :${user} ${installation_dir}/../..
 
 runuser -l ${user} -c '/opt/ibm-ucd/agent/bin/agent start >> /tmp/install.log'
