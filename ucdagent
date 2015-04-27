@@ -6,7 +6,7 @@
 # chkconfig: 2345 95 05
 # description: ucdagent daemon
 #
-# processname: urbancode-deploy
+# processname: ucdagent
 # pidfile: /var/run/ucdagent.pid
 
 # source function library
