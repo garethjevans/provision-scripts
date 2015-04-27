@@ -1,0 +1,74 @@
+#!/bin/sh
+#
+# /etc/init.d/ucdagent
+# Subsystem file for "ucdagent" server
+#
+# chkconfig: 2345 95 05
+# description: ucdagent daemon
+#
+# processname: urbancode-deploy
+# pidfile: /var/run/ucdagent.pid
+
+# source function library
+. /etc/rc.d/init.d/functions
+
+# pull in sysconfig settings
+
+RETVAL=0
+prog="ucdagent"
+UCDAGENT_HOME="/opt/ibm-ucd/agent"
+
+start() {
+        echo -n $"Starting $prog:"
+        ${UCDAGENT_HOME}/bin/agent start
+        RETVAL=$?
+        [ "$RETVAL" = 0 ] && touch /var/lock/subsys/$prog
+        echo
+}
+
+stop() {
+        echo -n $"Stopping $prog: `ps -ef | grep [u]rban | awk '{print $2}'` PID"
+        ${UCDAGENT_HOME}/bin/agent stop
+        RETVAL=$?
+        [ "$RETVAL" = 0 ] && rm -f /var/lock/subsys/$prog
+        echo
+}
+
+reload() {
+        echo -n $"Reloading $prog:"
+        killproc $prog -HUP
+        RETVAL=$?
+        echo
+}
+
+case "$1" in
+        start)
+                start
+                ;;
+        stop)
+                stop
+                ;;
+        restart)
+                stop
+                start
+                ;;
+        reload)
+                reload
+                ;;
+        condrestart)
+                if [ -f /var/lock/subsys/$prog ] ; then
+                        stop
+                        # avoid race
+                        sleep 3
+                        start
+                fi
+                ;;
+        status)
+                status $prog
+                RETVAL=$?
+                ;;
+        *)
+                echo $"Usage: $0 {start|stop|restart|reload|condrestart|status}"
+                RETVAL=1
+esac
+exit $RETVAL
