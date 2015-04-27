@@ -30,6 +30,9 @@ useradd ${user}
 echo "enabling the sudoers wheel (no password) - this will need to be changed(insecure)!!" >> $LOG
 sed -i 's/^#\( %wheel.*NOPASSWD.*$\)/\1/' /etc/sudoers
 
+#disable requiretty
+sed -i 's/^\(Defaults\).*\(requiretty\)$/\1 \!\2/' /etc/sudoers
+
 #add user to the wheel group
 echo "adding user ${user} to the wheel group" >> $LOG
 usermod -aG wheel ${user}
