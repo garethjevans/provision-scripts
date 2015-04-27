@@ -71,9 +71,16 @@ ${host_name}
 None
 EOF
 
+# add init.d script and configure
+ucdagent_script="https://github.com/garethjevans/provision-scripts/blob/master/ucdagent"
+ucdagent_script_name=`basename ${ucdagent_script}`
+wget ${ucdagent_script} -O /etc/init.d/${ucdagent_script_name}
+chmod 775 /etc/init.d/${ucdagent_script_name}
+chkconfig --add ${ucdagent_script_name}
+
 # configure access to ucd-agent installation
 echo "Changing owner of ${installation_dir} to ${user}" >> $LOG
 chown -R ${user} ${installation_dir}/..
 chown -R :${user} ${installation_dir}/..
 
-runuser -l ${user} -c '/opt/ibm-ucd/agent/bin/agent start >> /tmp/install.log'
+sudo -H -u ${user} sh -c 'ucdagent start'
