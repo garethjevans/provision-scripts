@@ -3,7 +3,7 @@
 # /etc/init.d/ucdagent
 # Subsystem file for "ucdagent" server
 #
-# chkconfig: 2345 60 04
+# chkconfig: 2345 95 05
 # description: ucdagent daemon
 #
 # processname: urbancode-deploy
