@@ -72,7 +72,7 @@ None
 EOF
 
 # add init.d script and configure
-ucdagent_script="https://github.com/garethjevans/provision-scripts/blob/master/ucdagent"
+ucdagent_script="https://raw.githubusercontent.com/garethjevans/provision-scripts/master/ucdagent"
 ucdagent_script_name=`basename ${ucdagent_script}`
 wget ${ucdagent_script} -O /etc/init.d/${ucdagent_script_name}
 chmod 775 /etc/init.d/${ucdagent_script_name}
