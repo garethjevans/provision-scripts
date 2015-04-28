@@ -17,8 +17,6 @@ echo "${URBANCODE} mcp-poc-uc.softlayer.com mcp-poc-uc" >> /etc/hosts
 echo "Done" >> $LOG
 HOST_NAME=$(grep `hostname` /etc/hosts | awk '{print $3}')
 
-echo "downloading ucd agent" >> $LOG
-wget ${agent_download_path} -O /tmp/${agent_download_name} >> $LOG
 cd ${SOFTWARE_DIR}
 echo "unzipping ${SOFTWARE_DIR}/ibm-ucd-agent.zip" >> $LOG
 unzip ${SOFTWARE_DIR}/ibm-ucd-agent.zip
