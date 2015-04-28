@@ -17,10 +17,11 @@
 RETVAL=0
 prog="ucdagent"
 UCDAGENT_HOME="/opt/ibm-ucd/agent"
+RUNAS="ucdagent"
 
 start() {
         echo -n $"Starting $prog:"
-        ${UCDAGENT_HOME}/bin/agent start
+        sudo -u ${RUNAS} ${UCDAGENT_HOME}/bin/agent start
         RETVAL=$?
         [ "$RETVAL" = 0 ] && touch /var/lock/subsys/$prog
         echo
@@ -28,7 +29,7 @@ start() {
 
 stop() {
         echo -n $"Stopping $prog: `ps -ef | grep [u]rban | awk '{print $2}'` PID"
-        ${UCDAGENT_HOME}/bin/agent stop
+        sudo -u ${RUNAS} ${UCDAGENT_HOME}/bin/agent stop
         RETVAL=$?
         [ "$RETVAL" = 0 ] && rm -f /var/lock/subsys/$prog
         echo
