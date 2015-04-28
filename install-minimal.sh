@@ -5,7 +5,7 @@ INSTALL_DIR=/opt/ibm-ucd/agent
 SOFTWARE_DIR=/opt/ibm-install/
 LOG=/tmp/install.log
 echo "Validating Java Install" >> $LOG
-java -version >> $LOG
+java -version 2>> $LOG
 
 echo "Validating ucdagent pre-reqs" >> $LOG
 id ucdagent >> $LOG
