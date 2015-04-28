@@ -3,7 +3,7 @@
 # /etc/init.d/ucdagent
 # Subsystem file for "ucdagent" server
 #
-# chkconfig: 2345 95 05
+# chkconfig: 345 99 01
 # description: ucdagent daemon
 #
 # processname: ucdagent
