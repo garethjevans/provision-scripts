@@ -77,10 +77,10 @@ ucdagent_script_name=`basename ${ucdagent_script}`
 wget ${ucdagent_script} -O /etc/init.d/${ucdagent_script_name}
 chmod 775 /etc/init.d/${ucdagent_script_name}
 chkconfig --add ${ucdagent_script_name}
+chkconfig --list | grep ${ucdagent_script_name} >> $LOG
 
 # configure access to ucd-agent installation
 echo "Changing owner of ${installation_dir} to ${user}" >> $LOG
-chown -R ${user} ${installation_dir}/..
-chown -R :${user} ${installation_dir}/..
+chown -R ${user}:${user} ${installation_dir}/..
 
-sudo -H -u ${user} sh -c 'ucdagent start'
+service ucdagent start
