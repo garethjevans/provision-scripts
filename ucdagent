@@ -51,6 +51,8 @@ case "$1" in
                 ;;
         restart)
                 stop
+                # avoid race
+                sleep 3
                 start
                 ;;
         reload)
