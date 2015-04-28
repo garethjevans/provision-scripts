@@ -10,8 +10,6 @@ java -version >> $LOG
 echo "Validating ucdagent pre-reqs" >> $LOG
 id ucdagent >> $LOG
 
-
-installation_dir=/opt/ibm-ucd/agent
 echo "Host Entries..." >> $LOG
 echo "${URBANCODE} mcp-poc-uc.softlayer.com mcp-poc-uc" >> /etc/hosts
 echo "Done" >> $LOG
